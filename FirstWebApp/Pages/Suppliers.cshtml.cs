@@ -1,3 +1,4 @@
+using FirstWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -11,9 +12,11 @@ namespace FirstWebApp.Pages
         public void OnGet()
         {
             Weekday = DateTime.Now.DayOfWeek.ToString();
-            Suppliers.Add("Supplier 1");
-            Suppliers.Add("Supplier 2");
-            Suppliers.Add("Supplier 3");
+
+            using (var context = new NorthwindContext())
+            {
+                Suppliers = context.Suppliers.Select(s => s.CompanyName).ToList();
+            }
         }
     }
 }
