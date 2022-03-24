@@ -3,24 +3,23 @@
 @{
 }
 
-<p>Idag är det @Model.Weekday   </p>
 
-<h1>Alla suppliers</h1>
 
-<table class="table">
-    <tr>
-        <td>Name</td>
-        <td>City</td>
-        <td></td>
-    </tr>
+<section class="products" id="products">
+    <h1>Suppliers</h1>
+    <div class="productgallery">
+
     @foreach (var supplier in Model.Suppliers)
     {
-        <tr>
-            <td>@supplier.Name</td>
-            <td>@supplier.City</td>
-            <td>
-                <a asp-page="/Supplier"  asp-route-supplierId="@supplier.Id">EDIT</a>
-            </td>
-        </tr>
+        <div class="productcard">
+            <img src="https://picsum.photos/300/300?@supplier.Id">
+            <div class="information">
+                <div class="name">@supplier.Name</div>
+                <div class="description">@supplier.City</div>
+                <a class="ctabutton" asp-page="/Supplier" asp-route-supplierId="@supplier.Id">View</a>
+            </div>
+        </div>
+        
     }
-</table>
+    </div>
+</section>
