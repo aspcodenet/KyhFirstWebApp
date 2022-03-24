@@ -1,7 +1,12 @@
+using FirstWebApp.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddDbContext<NorthwindContext>();
+
 
 var app = builder.Build();
 

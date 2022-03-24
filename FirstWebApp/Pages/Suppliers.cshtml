@@ -7,9 +7,18 @@
 
 <h1>Alla suppliers</h1>
 
-<ul>
-@foreach (var supplier in Model.Suppliers)
-{
-    <li>@supplier</li>
-}
-</ul>
+<table class="table">
+    <tr>
+        <td>Name</td>
+        <td>City</td>
+        <td></td>
+    </tr>
+    @foreach (var supplier in Model.Suppliers)
+    {
+        <tr>
+            <td>@supplier.Name</td>
+            <td>@supplier.City</td>
+            <td>@supplier.Id</td>
+        </tr>
+    }
+</table>
