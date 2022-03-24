@@ -18,7 +18,9 @@
         <tr>
             <td>@supplier.Name</td>
             <td>@supplier.City</td>
-            <td>@supplier.Id</td>
+            <td>
+                <a asp-page="/Supplier"  asp-route-supplierId="@supplier.Id">EDIT</a>
+            </td>
         </tr>
     }
 </table>
