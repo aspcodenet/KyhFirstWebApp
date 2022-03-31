@@ -213,3 +213,43 @@ section {
         border-top-left-radius: 30px;
         border-top-right-radius: 30px;
     }
+
+
+
+
+
+
+table {
+    border-spacing: 1;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+table * {
+    position: relative;
+}
+
+table td, table th {
+    padding-left: 8px;
+}
+
+
+
+table tbody tr {
+    height: 48px;
+    border-bottom: 1px solid #E3F1D5;
+}
+
+table tbody tr:last-child {
+    border: 0;
+}
+
+table td, table th {
+    text-align: left;
+}
+
