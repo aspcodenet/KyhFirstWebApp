@@ -5,9 +5,25 @@
 
 <table class="table">
     <tr>
-        <td>Id</td>
-        <td>Customer</td>
-        <td>Datum</td>
+        <td>Id 
+            <a asp-page="/Orders" asp-route-col="id" asp-route-order="asc" >
+                <i class='bx bx-sort-a-z'></i>  </a> 
+            <a asp-page="/Orders" asp-route-col="id" asp-route-order="desc" >    
+                <i class='bx bx-sort-z-a' ></i> </a>
+            </td>
+        <td>Customer 
+            <a asp-page="/Orders" asp-route-col="customer" asp-route-order="asc" >
+                <i class='bx bx-sort-a-z'></i>  </a> 
+            <a asp-page="/Orders" asp-route-col="customer" asp-route-order="desc" >    
+                <i class='bx bx-sort-z-a' ></i> </a>
+
+            </td>
+        <td>Datum 
+            <a asp-page="/Orders" asp-route-col="datum" asp-route-order="asc" >
+                <i class='bx bx-sort-a-z'></i>  </a> 
+            <a asp-page="/Orders" asp-route-col="datum" asp-route-order="desc" >    
+                <i class='bx bx-sort-z-a' ></i> </a>
+            </td>
     </tr>
     @foreach (var order in Model.Orders)
     {
