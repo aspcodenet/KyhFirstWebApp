@@ -29,10 +29,34 @@ namespace FirstWebApp.Pages
         private readonly NorthwindContext _context;
         private readonly IFreightService _freightService;
 
-        public void OnGet()
+        public void OnGet(string col = "id", string order = "asc")
         {
-            Orders = _context.Orders.Include(e=>e.Customer)
-                .Select(o => new OrderViewModel
+            var o  = _context.Orders.Include(e=>e.Customer).AsQueryable();
+            //Fortfarande inte skickat till SQL
+            if (col == "id")
+            {
+                if(order == "asc")
+                    o = o.OrderBy(ord => ord.OrderId);
+                else
+                    o = o.OrderByDescending(ord => ord.OrderId);
+            }
+            else if (col == "customer")
+            {
+                if (order == "asc")
+                    o = o.OrderBy(ord => ord.Customer.CompanyName);
+                else
+                    o = o.OrderByDescending(ord => ord.Customer.CompanyName);
+            }
+            else if (col == "datum")
+            {
+                if (order == "asc")
+                    o = o.OrderBy(ord => ord.OrderDate);
+                else
+                    o = o.OrderByDescending(ord => ord.OrderDate);
+            }
+
+
+            Orders = o.Select(o => new OrderViewModel
                 {
                     Id = o.OrderId,
                     CustomerName = o.Customer.CompanyName,
