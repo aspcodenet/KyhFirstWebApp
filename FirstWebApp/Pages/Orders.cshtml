@@ -1,0 +1,21 @@
+﻿@page
+@model FirstWebApp.Pages.OrdersModel
+@{
+}
+
+<table class="table">
+    <tr>
+        <td>Id</td>
+        <td>Customer</td>
+        <td>Datum</td>
+    </tr>
+    @foreach (var order in Model.Orders)
+    {
+        <tr>
+            <td>@order.Id</td>
+            <td>@order.CustomerName</td>
+            <td>@order.DateTime</td>
+        </tr>
+    }
+
+</table>

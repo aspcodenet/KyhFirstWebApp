@@ -26,7 +26,7 @@ namespace FirstWebApp.Pages
         {
             Weekday = DateTime.Now.DayOfWeek.ToString();
 
-            Suppliers = _context.Suppliers.Select(s => 
+            Suppliers = _context.Suppliers.Take(30).Select(s => 
                  new SupplierViewModel
                  {
                      City = s.City,
