@@ -17,6 +17,9 @@ namespace FirstWebApp.Pages
 
         public List<OrderViewModel> Orders { get; set; }
 
+        //[BindProperty(SupportsGet = true)]
+        public string SearchWord { get; set; }
+
         public class OrderViewModel
         {
             public int Id { get; set; }
@@ -29,9 +32,16 @@ namespace FirstWebApp.Pages
         private readonly NorthwindContext _context;
         private readonly IFreightService _freightService;
 
-        public void OnGet(string col = "id", string order = "asc")
+        public void OnGet(string searchWord, string col = "id", string order = "asc" )
         {
+            SearchWord = searchWord;
             var o  = _context.Orders.Include(e=>e.Customer).AsQueryable();
+
+            if(!string.IsNullOrEmpty(SearchWord))
+                o = o.Where( ord=>ord.Customer.CompanyName.Contains(SearchWord) 
+                                      || ord.Customer.ContactName.Contains(SearchWord)  
+                            );
+
             //Fortfarande inte skickat till SQL
             if (col == "id")
             {
