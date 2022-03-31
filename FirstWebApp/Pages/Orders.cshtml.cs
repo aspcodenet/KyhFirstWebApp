@@ -25,7 +25,7 @@ namespace FirstWebApp.Pages
         }
         public void OnGet()
         {
-            Orders = _context.Orders.Include(e => e.Customer)
+            Orders = _context.Orders.Include(e=>e.Customer)
                 .Select(o => new OrderViewModel
                 {
                     Id = o.OrderId,
