@@ -1,4 +1,5 @@
 using FirstWebApp.Models;
+using FirstWebApp.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<NorthwindContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddTransient<IFreightService, FreightService>();
+
 
 
 var app = builder.Build();
