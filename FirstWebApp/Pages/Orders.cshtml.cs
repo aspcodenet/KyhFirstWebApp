@@ -17,6 +17,9 @@ namespace FirstWebApp.Pages
 
         public List<OrderViewModel> Orders { get; set; }
 
+
+        public string SortOrder { get; set; }
+        public string SortCol { get; set; }
         public int PageNo { get; set; }
         //[BindProperty(SupportsGet = true)]
         public string SearchWord { get; set; }
@@ -37,6 +40,9 @@ namespace FirstWebApp.Pages
         {
             PageNo = pageno;
             SearchWord = searchWord;
+            SortCol = col;
+            SortOrder = order;
+
             var o  = _context.Orders.Include(e=>e.Customer).AsQueryable();
 
             if(!string.IsNullOrEmpty(SearchWord))
