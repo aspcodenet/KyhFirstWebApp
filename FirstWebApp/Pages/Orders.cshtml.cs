@@ -17,6 +17,7 @@ namespace FirstWebApp.Pages
 
         public List<OrderViewModel> Orders { get; set; }
 
+        public int PageNo { get; set; }
         //[BindProperty(SupportsGet = true)]
         public string SearchWord { get; set; }
 
@@ -32,8 +33,9 @@ namespace FirstWebApp.Pages
         private readonly NorthwindContext _context;
         private readonly IFreightService _freightService;
 
-        public void OnGet(string searchWord, string col = "id", string order = "asc" )
+        public void OnGet(string searchWord, string col = "id", string order = "asc", int pageno=1)
         {
+            PageNo = pageno;
             SearchWord = searchWord;
             var o  = _context.Orders.Include(e=>e.Customer).AsQueryable();
 
@@ -65,15 +67,18 @@ namespace FirstWebApp.Pages
                     o = o.OrderByDescending(ord => ord.OrderDate);
             }
 
+            int toSkip = (pageno - 1) * 20;
+            o = o.Skip(toSkip).Take(20);
+
 
             Orders = o.Select(o => new OrderViewModel
-                {
-                    Id = o.OrderId,
-                    CustomerName = o.Customer.CompanyName,
-                    DateTime = o.OrderDate.Value.ToString("yyyy-MM-dd"),
-                    HasFreeFreight = _freightService.HasFreeFreight(o)
-                })
-                .ToList();
+            {
+                Id = o.OrderId,
+                CustomerName = o.Customer.CompanyName,
+                DateTime = o.OrderDate.Value.ToString("yyyy-MM-dd"),
+                HasFreeFreight = _freightService.HasFreeFreight(o)
+            }).ToList();
+
         }
     }
 }
