@@ -11,22 +11,22 @@
 <table class="table">
     <tr>
         <td>Id 
-            <a asp-page="/Orders" asp-route-searchWord="@Model.SearchWord"  asp-route-col="id" asp-route-order="asc"  >
+            <a asp-page="/Orders" asp-route-searchWord="@Model.SearchWord"  asp-route-col="OrderId" asp-route-order="asc"  >
                 <i class='bx bx-sort-a-z'></i>  </a> 
-            <a asp-page="/Orders" asp-route-searchWord="@Model.SearchWord" asp-route-col="id" asp-route-order="desc" >    
+            <a asp-page="/Orders" asp-route-searchWord="@Model.SearchWord" asp-route-col="OrderId" asp-route-order="desc" >    
                 <i class='bx bx-sort-z-a' ></i> </a>
             </td>
         <td>Customer 
-            <a asp-page="/Orders" asp-route-searchWord="@Model.SearchWord" asp-route-col="customer" asp-route-order="asc" >
+            <a asp-page="/Orders" asp-route-searchWord="@Model.SearchWord" asp-route-col="Customer.CompanyName" asp-route-order="asc" >
                 <i class='bx bx-sort-a-z'></i>  </a> 
-            <a asp-page="/Orders" asp-route-searchWord="@Model.SearchWord" asp-route-col="customer" asp-route-order="desc" >    
+            <a asp-page="/Orders" asp-route-searchWord="@Model.SearchWord" asp-route-col="Customer.CompanyName" asp-route-order="desc" >    
                 <i class='bx bx-sort-z-a' ></i> </a>
 
             </td>
         <td>Datum 
-            <a asp-page="/Orders" asp-route-searchWord="@Model.SearchWord" asp-route-col="datum" asp-route-order="asc" >
+            <a asp-page="/Orders" asp-route-searchWord="@Model.SearchWord" asp-route-col="OrderDate" asp-route-order="asc" >
                 <i class='bx bx-sort-a-z'></i>  </a> 
-            <a asp-page="/Orders" asp-route-searchWord="@Model.SearchWord" asp-route-col="datum" asp-route-order="desc" >    
+            <a asp-page="/Orders" asp-route-searchWord="@Model.SearchWord" asp-route-col="OrderDate" asp-route-order="desc" >    
                 <i class='bx bx-sort-z-a' ></i> </a>
             </td>
     </tr>
@@ -46,8 +46,13 @@
                 <a asp-page="/Orders" asp-route-col="@Model.SortCol" asp-route-order="@Model.SortOrder"  asp-route-searchWord="@Model.SearchWord"   asp-route-pageno="@(Model.PageNo - 1)">Prev</a>
             }
         </td>
-        <td></td>
-        <td><a asp-page="/Orders" asp-route-col="@Model.SortCol" asp-route-order="@Model.SortOrder" asp-route-searchWord="@Model.SearchWord" asp-route-pageno="@(Model.PageNo+1)">Next</a></td>
+        <td> Visar sidan @Model.PageNo av totalt @Model.TotalPageCount  </td>
+        <td>
+            @if (Model.PageNo < Model.TotalPageCount)
+            {
+                <a asp-page="/Orders" asp-route-col="@Model.SortCol" asp-route-order="@Model.SortOrder" asp-route-searchWord="@Model.SearchWord" asp-route-pageno="@(Model.PageNo + 1)">Next</a>
+            }
+        </td>
     </tr>
 
 </table>

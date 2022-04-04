@@ -1,4 +1,5 @@
 using System.Reflection.Metadata;
+using FirstWebApp.Infrastructure.Paging;
 using FirstWebApp.Models;
 using FirstWebApp.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,9 @@ namespace FirstWebApp.Pages
         public string SortOrder { get; set; }
         public string SortCol { get; set; }
         public int PageNo { get; set; }
+
+        public int TotalPageCount { get; set; }
+
         //[BindProperty(SupportsGet = true)]
         public string SearchWord { get; set; }
 
@@ -36,7 +40,7 @@ namespace FirstWebApp.Pages
         private readonly NorthwindContext _context;
         private readonly IFreightService _freightService;
 
-        public void OnGet(string searchWord, string col = "id", string order = "asc", int pageno=1)
+        public void OnGet(string searchWord, string col = "OrderId", string order = "asc", int pageno=1)
         {
             PageNo = pageno;
             SearchWord = searchWord;
@@ -50,34 +54,38 @@ namespace FirstWebApp.Pages
                                       || ord.Customer.ContactName.Contains(SearchWord)  
                             );
 
-            //Fortfarande inte skickat till SQL
-            if (col == "id")
-            {
-                if(order == "asc")
-                    o = o.OrderBy(ord => ord.OrderId);
-                else
-                    o = o.OrderByDescending(ord => ord.OrderId);
-            }
-            else if (col == "customer")
-            {
-                if (order == "asc")
-                    o = o.OrderBy(ord => ord.Customer.CompanyName);
-                else
-                    o = o.OrderByDescending(ord => ord.Customer.CompanyName);
-            }
-            else if (col == "datum")
-            {
-                if (order == "asc")
-                    o = o.OrderBy(ord => ord.OrderDate);
-                else
-                    o = o.OrderByDescending(ord => ord.OrderDate);
-            }
-
-            int toSkip = (pageno - 1) * 20;
-            o = o.Skip(toSkip).Take(20);
+            o = o.OrderBy(col,
+                order == "asc" ? ExtensionMethods.QuerySortOrder.Asc : 
+                    ExtensionMethods.QuerySortOrder.Desc);
 
 
-            Orders = o.Select(o => new OrderViewModel
+            ////Fortfarande inte skickat till SQL
+            //if (col == "id")
+            //{
+            //    if(order == "asc")
+            //        o = o.OrderBy(ord => ord.OrderId);
+            //    else
+            //        o = o.OrderByDescending(ord => ord.OrderId);
+            //}
+            //else if (col == "customer")
+            //{
+            //    if (order == "asc")
+            //        o = o.OrderBy(ord => ord.Customer.CompanyName);
+            //    else
+            //        o = o.OrderByDescending(ord => ord.Customer.CompanyName);
+            //}
+            //else if (col == "datum")
+            //{
+            //    if (order == "asc")
+            //        o = o.OrderBy(ord => ord.OrderDate);
+            //    else
+            //        o = o.OrderByDescending(ord => ord.OrderDate);
+            //}
+
+            var pageResult = o.GetPaged(PageNo, 20);
+            TotalPageCount = pageResult.PageCount;
+
+            Orders = pageResult.Results.Select(o => new OrderViewModel
             {
                 Id = o.OrderId,
                 CustomerName = o.Customer.CompanyName,
